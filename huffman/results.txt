@@ -1,0 +1,2 @@
+Uncompressed file length of large.txt in bits 25632616Compressed file length of large.txt in bits 14397675Compression ratio = 0.56169355
+Elapsed time: 143 milliseconds
