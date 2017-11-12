@@ -6,7 +6,8 @@ public class Node {
 	private Node child; // first child (when it exists)
 	
 	/** create a new node with letter c */
-	public Node(char c){
+	public Node(char c)
+	{
 		letter = c;
 		sibling = null;
 		child = null;
@@ -36,8 +37,5 @@ public class Node {
 	public void setChild(Node c) {
 		this.child = c;
 	}
-
-	// include accessors and mutators for
-	// the various components of the class
 	
 }

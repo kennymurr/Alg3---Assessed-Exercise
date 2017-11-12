@@ -1,41 +1,43 @@
-import java.util.ArrayList;
-
 public class Trie {
 	
 	// create root of the trie
 	private Node root; 
 	
-	public Trie() {
+	public Trie() 
+	{
 		// null character in the root
 		root = new Node(Character.MIN_VALUE); 
 	}        
 	
 	// possible outcomes of a search
-	private enum Outcomes {INSERT, NOTHING, UNKNOWN}
+	private enum Outcomes {INSERT, ITERATE, UNKNOWN}
 	
-	
-	public void search(String w)
+	public Node search(char c, Node n)
 	{
-		Outcomes outcome = Outcomes.UNKNOWN;
-		int i = 0;//position in word 'w'
-		Node current = root;
-		Node next = current.getChild();
-		while (outcome == Outcomes.UNKNOWN)
+		if(n==null)
 		{
-			if (next!=null && next.getLetter()==w.charAt(i))//chars match
+			n=root;
+		}
+		Node current = n;
+		Node next = n.getChild();//Node to be used in comparisons is child of node passed
+		Outcomes outcome = Outcomes.UNKNOWN;
+		while (outcome == Outcomes.UNKNOWN)
+		{	
+			if (next!=null && next.getLetter()==c)//If next is a node and has character c
 			{
-				current = next;
-				next = current.getChild();
-				i++;
-			}else if (next!=null)//try next sibling
+				outcome=Outcomes.ITERATE;//Character has been located in trie, move on to next
+				return next;
+			}else if (next!=null)
 			{
-				next = next.getSibling();
-			}else//if no siblings are same as w.charat(i)
+				next=next.getSibling();
+
+			}else
 			{
-				insert(w.charAt(i), current);//insert w.charAt(i) to the trie
-				outcome = Outcomes.INSERT;
+				outcome=Outcomes.INSERT;
+				return current;
 			}
-		}		
+		}
+		return null;
 	}
 	
 	
@@ -44,13 +46,21 @@ public class Trie {
 		if (n==null)
 		{
 			n=root;
-		}
+		}	
 		Node current = n;
 		Node newNode = new Node(c);
 		newNode.setSibling(current.getChild());
 		current.setChild(newNode);
+		
+		/*
+		if ((int)c > 5)
+		{
+			//System.out.println(current);
+			System.out.println(newNode.getSibling().getLetter());
+			System.out.println(newNode.getSibling().getSibling().getLetter());
+			System.out.println(newNode.getSibling().getSibling().getSibling().getLetter());
+			System.out.println("Trie" + n.getChild().getLetter());
+		}
+		*/
 	}
-	
-	// delete method to be added
-	// traverse method (extracting words) to be added
 }
